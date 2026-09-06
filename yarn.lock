@@ -155,6 +155,11 @@
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.2.302.tgz#f074632ee55aa1b5b16cd2be094b42981a71c322"
   integrity sha512-9JOPzUb7RCqIEWeoE78mPFd71fzyJ25LjeMzD45zQ75f41ca7BsgQVqiyrIuxDZ1yyZ4PdyxCMZF0KJlJ9qX0g==
 
+cookie-es@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/cookie-es/-/cookie-es-3.1.1.tgz#c4a8a16cf88cb5a185b23f4a61d6e9a85eb53287"
+  integrity sha512-UaXxwISYJPTr9hwQxMFYZ7kNhSXboMXP+Z3TRX6f1/NyaGPfuNUZOWP1pUEb75B2HjfklIYLVRfWiFZJyC6Npg==
+
 cookie@^1.0.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-1.1.1.tgz#3bb9bdfc82369db9c2f69c93c9c3ceb310c88b3c"
@@ -213,6 +218,13 @@ react-router@7.18.3:
   dependencies:
     cookie "^1.0.1"
     set-cookie-parser "^2.6.0"
+
+react-router@^8.3.1:
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-8.3.1.tgz#d704ca5a564e2bc89ce05a537ab577578e947b7b"
+  integrity sha512-TEOpiO2g0TJHEOJeRVv4amUFun9v1npCKszvcquNvzETUtJ8udV86ah5eFoHT7g26bsBvT6EiIhqulR8eDF++A==
+  dependencies:
+    cookie-es "^3.1.1"
 
 react@^19.2.8:
   version "19.2.8"

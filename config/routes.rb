@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get "homepage/index"
+  get "/*path" => "homepage#index"
   get "homepage/show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
