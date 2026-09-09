@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      get "photos/index"
+      get "show/:id", to: "photos#show"
+    end
+  end
   get "/*path" => "homepage#index"
   get "homepage/show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
