@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 8px;
+  border: 1px solid black;
+  padding: 6px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.poster {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.name {
+  text-align: center;
+  font-size: clamp(16px, 1.6rem, 2vw);
+}
+
+.difficulty {
+  position: absolute;
+  right: 5%;
+  top: 12px;
+  background-color: #fff;
+  padding: 8px 12px;
+  border-radius: 24px;
+  font-weight: 600;
+}

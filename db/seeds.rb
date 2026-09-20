@@ -8,4 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Photo.create(difficulty: 'medium', image: "/images/ww1.png")
+Photo.create(difficulty: 'medium', image: "/images/city_center_chaos.jpg", name: "City center chaos")
+Photo.create(difficulty: 'medium', image: "/images/department_store_rush.jpg", name: "Department store rush")
+Photo.create(difficulty: 'hard', image: "/images/feast_frenzy.jpg", name: "Feast frenzy")
+Photo.create(difficulty: 'medium', image: "/images/fishing_day.jpg", name: "Fishing day")
+Photo.create(difficulty: 'medium', image: "/images/into_the_hole.jpg", name: "Into the hole")
+Photo.create(difficulty: 'medium', image: "/images/maze_madness.jpg", name: "Maze madness")
+Photo.create(difficulty: 'medium', image: "/images/medieval_city.jpg", name: "Medieval city")

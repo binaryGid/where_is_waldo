@@ -4,6 +4,7 @@ import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./Home";
 import Photos from "./Photos";
+import "../../assets/stylesheets/application.css";
 
 const router = createBrowserRouter([
   {
