@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Card from "./Card";
 import styles from "../../assets/stylesheets/Photos.module.css";
+import { Link } from "react-router";
 
 function Photos() {
   const [images, setImages] = useState([]);
@@ -40,12 +41,14 @@ function Photos() {
     <section>
       <div className={styles.container}>
         {images.map((image) => (
-          <Card
-            key={image.image}
-            src={image.image}
-            name={image.name}
-            difficulty={image.difficulty}
-          />
+          <Link to={`/photo/${image.id}`}>
+            <Card
+              key={image.image}
+              src={image.image}
+              name={image.name}
+              difficulty={image.difficulty}
+            />
+          </Link>
         ))}
       </div>
     </section>

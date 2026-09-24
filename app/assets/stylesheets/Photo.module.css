@@ -1,0 +1,36 @@
+.titleBar {
+  display: flex;
+  background-color: #007aff;
+  justify-content: space-between;
+  padding: 16px;
+  color: #fff;
+  font-weight: 600;
+  text-transform: capitalize;
+  align-items: center;
+}
+
+.titleBar > div {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.difficulty {
+  color: #254439;
+  background-color: #f5f5f7;
+  padding: 4px 8px;
+  border-radius: 32px;
+}
+
+.imgContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 8px;
+  &:hover {
+    cursor: crosshair;
+  }
+}
+
+.img {
+  width: 100%;
+}

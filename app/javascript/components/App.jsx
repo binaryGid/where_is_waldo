@@ -5,9 +5,11 @@ import styles from "../../assets/stylesheets/App.module.css";
 
 export default function App() {
   return (
-    <div className={styles.container}>
+    <div>
       <Navbar />
-      <Outlet />
+      <div className={styles.container}>
+        <Outlet />
+      </div>
     </div>
   );
 }

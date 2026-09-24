@@ -13,3 +13,8 @@
   margin: 0;
   padding: 0;
 }
+
+body,
+html {
+  font-size: clamp(16px, 4vw, 24px);
+}

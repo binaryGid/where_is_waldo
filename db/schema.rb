@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_17_170234) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_21_175037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "characters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "location", null: false
+    t.string "name", null: false
+    t.bigint "photo_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["photo_id"], name: "index_characters_on_photo_id"
+  end
 
   create_table "photos", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -21,4 +30,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_170234) do
     t.string "name"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "characters", "photos"
 end
