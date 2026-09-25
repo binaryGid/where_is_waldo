@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../../assets/stylesheets/Photo.module.css";
+import Characters from "./Characters";
 
 function Photo() {
   const { id } = useParams();
@@ -26,6 +27,7 @@ function Photo() {
           <p>{image.name}</p>
           <span className={styles.difficulty}>{image.difficulty}</span>
         </div>
+        <Characters />
         <span>Timer</span>
       </div>
       <div className={styles.imgContainer}>

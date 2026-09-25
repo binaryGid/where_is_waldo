@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get "show/:id/characters/index", to: "characters#index"
+      get "characters/show/:id", to: "character#show"
       get "photos/index"
       get "show/:id", to: "photos#show"
     end

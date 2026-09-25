@@ -16,41 +16,51 @@
 # Photo.create(difficulty: 'medium', image: "/images/maze_madness.jpg", name: "Maze madness")
 # Photo.create(difficulty: 'medium', image: "/images/medieval_city.jpg", name: "Medieval city")
 
-chars = {
-  23 => {
-    names: [ "Waldo", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
-    locations: [ "/images/avatars/HeadshotWaldo.webp", "/images/avatars/HeadshotWilma.png", "/images/avatars/HeadshotWizard.webp", "/images/avatars/HeadshotOdlaw.webp" ]
-  },
-  24 => {
-    names: [ 'Waldo', "Burning pants lady", "Long man long tie", "Attacking glove" ],
-    locations: [ "/images/avatars/HeadshotWaldo.webp", "/images/avatars/HeadshotBurningPantsLady.png", "/images/avatars/HeadshotLongManLongTie.png", "/images/avatars/HeadshotAttackingGlove.png" ]
-  },
-  25 => {
-    names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
-    locations: [ "/images/avatars/HeadshotWaldo.webp", "/images/avatars/TailshotWoof.png", "/images/avatars/HeadshotWilma.png", "/images/avatars/HeadshotWizard.webp", "/images/avatars/HeadshotOdlaw.webp" ]
-  },
-  26 => {
-    names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard" ],
-    locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/TailshotWoof.png", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp" ]
-  },
-  27 => {
-    names: [ "Waldo", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
-    locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp", "images/avatars/HeadshotOdlaw.webp" ]
-  },
-  28 => {
-    names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
-    locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/TailshotWoof.png", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp", "images/avatars/HeadshotOdlaw.webp" ]
-  },
-  29 => {
-    names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
-    locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/TailshotWoof.png", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp", "images/avatars/HeadshotOdlaw.webp" ]
-  }
-}
+# chars = {
+#   23 => {
+#     names: [ "Waldo", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
+#     locations: [ "/images/avatars/HeadshotWaldo.webp", "/images/avatars/HeadshotWilma.png", "/images/avatars/HeadshotWizard.webp", "/images/avatars/HeadshotOdlaw.webp" ]
+#   },
+#   24 => {
+#     names: [ 'Waldo', "Burning pants lady", "Long man long tie", "Attacking glove" ],
+#     locations: [ "/images/avatars/HeadshotWaldo.webp", "/images/avatars/HeadshotBurningPantsLady.png", "/images/avatars/HeadshotLongManLongTie.png", "/images/avatars/HeadshotAttackingGlove.png" ]
+#   },
+#   25 => {
+#     names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
+#     locations: [ "/images/avatars/HeadshotWaldo.webp", "/images/avatars/TailshotWoof.png", "/images/avatars/HeadshotWilma.png", "/images/avatars/HeadshotWizard.webp", "/images/avatars/HeadshotOdlaw.webp" ]
+#   },
+#   26 => {
+#     names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard" ],
+#     locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/TailshotWoof.png", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp" ]
+#   },
+#   27 => {
+#     names: [ "Waldo", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
+#     locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp", "images/avatars/HeadshotOdlaw.webp" ]
+#   },
+#   28 => {
+#     names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
+#     locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/TailshotWoof.png", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp", "images/avatars/HeadshotOdlaw.webp" ]
+#   },
+#   29 => {
+#     names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
+#     locations: [ "images/avatars/HeadshotWaldo.webp", "images/avatars/TailshotWoof.png", "images/avatars/HeadshotWilma.png", "images/avatars/HeadshotWizard.webp", "images/avatars/HeadshotOdlaw.webp" ]
+#   }
+# }
 
-chars.each_pair do |key, value|
-  photo = Photo.find(key)
-  numOfCharacters = value[:names].length
-  numOfCharacters.times do |i|
-    photo.characters.create!(name: value[:names][i], location: value[:locations][i])
-  end
-end
+# chars.each_pair do |key, value|
+#   photo = Photo.find(key)
+#   numOfCharacters = value[:names].length
+#   numOfCharacters.times do |i|
+#     photo.characters.create!(name: value[:names][i], location: value[:locations][i])
+#   end
+# end
+# Photo.first.characters.destroy_all
+
+# chars = {
+#     names: [ "Waldo", "Woof the Dog", "Wilma", "Whitebeard the Wizard", "Odlaw" ],
+#     locations: [ "/images/avatars/HeadshotWaldo.webp", "images/avatars/TailshotWoof.png", "/images/avatars/HeadshotWilma.png", "/images/avatars/HeadshotWizard.webp", "/images/avatars/HeadshotOdlaw.webp" ]
+#   }
+
+# 5.times do |i|
+#   Photo.first.characters.create!(name: chars[:names][i], location: chars[:locations][i])
+# end
