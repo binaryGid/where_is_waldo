@@ -1,0 +1,10 @@
+.wrapper {
+  padding: 8px;
+  width: 320px;
+  margin: 0;
+  position: absolute;
+  inset: auto;
+  & h2 {
+    margin-bottom: 8px;
+  }
+}

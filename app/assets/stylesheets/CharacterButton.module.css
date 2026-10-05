@@ -1,0 +1,31 @@
+.button_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.button {
+  height: 50px;
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  background-color: #007aff;
+  outline: none;
+  border: none;
+  position: relative;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.button img {
+  width: 50px;
+  aspect-ratio: 1;
+  background-color: #fff;
+}
+
+.button p {
+  color: #fff;
+  font-size: 18px;
+  align-self: center;
+}
