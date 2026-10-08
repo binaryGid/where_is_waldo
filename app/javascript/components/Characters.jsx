@@ -11,7 +11,7 @@ function Character({ characters }) {
               key={character.name}
               src={character.location}
               alt={character.name}
-              className={styles.character}
+              className={character.found ? styles.found : styles.character}
             />
           ))
         : ""}

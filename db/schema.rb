@@ -10,16 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_21_175037) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_08_122725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "characters", force: :cascade do |t|
+  create_table "answers", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.decimal "max_height", precision: 4, scale: 2
+    t.decimal "max_width", precision: 4, scale: 2
+    t.decimal "min_height", precision: 4, scale: 2
+    t.decimal "min_width", precision: 4, scale: 2
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "characters", force: :cascade do |t|
+    t.bigint "answer_id", null: false
+    t.datetime "created_at", null: false
+    t.boolean "found", default: false
     t.string "location", null: false
     t.string "name", null: false
     t.bigint "photo_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_characters_on_answer_id"
     t.index ["photo_id"], name: "index_characters_on_photo_id"
   end
 
@@ -31,5 +43,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_175037) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "characters", "answers"
   add_foreign_key "characters", "photos"
 end

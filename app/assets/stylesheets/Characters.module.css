@@ -1,11 +1,18 @@
 .wrapper {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
-.character {
+.character,
+.found {
+  position: relative;
   width: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
   background-color: #f5f5f7;
+}
+
+.found {
+  background-color: red;
 }

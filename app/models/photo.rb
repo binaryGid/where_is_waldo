@@ -4,4 +4,5 @@ class Photo < ApplicationRecord
   validates :name, presence: true
 
   has_many :characters
+  has_many :answers, through: :characters
 end

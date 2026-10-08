@@ -2,15 +2,30 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../../assets/stylesheets/Photo.module.css";
 import wrapperStyle from "../../assets/stylesheets/CharactersDialog.module.css";
+import notHere from "../../assets/stylesheets/NotHere.module.css";
 
 import Characters from "./Characters";
 import CharactersDialog from "./CharactersDialog";
+import FoundMarker from "./FoundMarker";
 
 function Photo() {
-  const { id } = useParams();
+  const [stopWatch, setStopwatch] = useState(0);
   const [image, setImage] = useState([]);
-  const imgContainerRef = useRef(null);
+  const [markers, setMarkers] = useState([]);
+  const [offsets, setOffsets] = useState({});
+  const [notification, setNotification] = useState(null);
   const [characters, setCharacters] = useState([]);
+  const [dimensions, setDimensions] = useState({ width: null, height: null });
+  const popoverContainerRef = useRef(null);
+  const notHereRef = useRef(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setStopwatch((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  });
 
   useEffect(() => {
     let ignore = false;
@@ -19,6 +34,7 @@ function Photo() {
       .then((results) => {
         if (!ignore) {
           setImage(results);
+          console.log(results);
         }
       });
     return () => (ignore = true);
@@ -40,24 +56,58 @@ function Photo() {
 
   const displayCharactersDialog = (e) => {
     const rect = e.target.getBoundingClientRect();
-    const horizontalDiff = Number(rect.width) - Number(e.nativeEvent.offsetX);
-    const verticalDiff = Number(rect.height) - Number(e.nativeEvent.offsetY);
+    const x = Number(e.nativeEvent.offsetX);
+    const y = Number(e.nativeEvent.offsetY);
+
+    const horizontalDiff = Number(rect.width) - x;
+    const verticalDiff = Number(rect.height) - y;
     if (horizontalDiff > 330) {
-      imgContainerRef.current.style.left = `${rect.left + e.nativeEvent.offsetX + 10}px`;
-      imgContainerRef.current.style.right = null;
+      popoverContainerRef.current.style.left = `${rect.left + x + 10}px`;
+      popoverContainerRef.current.style.right = null;
     } else {
-      imgContainerRef.current.style.left = null;
-      imgContainerRef.current.style.right = `calc(100vw - ${rect.left + e.nativeEvent.offsetX - 10}px)`;
+      popoverContainerRef.current.style.left = null;
+      popoverContainerRef.current.style.right = `calc(100vw - ${rect.left + x - 10}px)`;
     }
     if (verticalDiff > 297) {
-      imgContainerRef.current.style.top = `${rect.top + e.nativeEvent.offsetY + 10}px`;
-      imgContainerRef.current.style.bottom = null;
+      popoverContainerRef.current.style.top = `${rect.top + y + 10}px`;
+      popoverContainerRef.current.style.bottom = null;
     } else {
-      imgContainerRef.current.style.bottom = `calc(100dvh - ${rect.top + e.nativeEvent.offsetY - 10}px)`;
-      imgContainerRef.current.style.top = null;
+      popoverContainerRef.current.style.bottom = `calc(100dvh - ${rect.top + y - 10}px)`;
+      popoverContainerRef.current.style.top = null;
     }
 
-    imgContainerRef.current.showPopover();
+    const width = (x / Number(rect.width)).toFixed(4) * 100;
+    const height = (y / Number(rect.height)).toFixed(4) * 100;
+    setDimensions((prev) => ({ ...prev, width, height }));
+
+    setOffsets({ ...offsets, x: x, y: y });
+    setNotification(null);
+
+    popoverContainerRef.current.showPopover();
+  };
+
+  const mark = (character_id) => {
+    setMarkers([...markers, { x: offsets.x, y: offsets.y }]);
+    characters.map((character) =>
+      character.id == character_id ? (character.found = true) : character,
+    );
+    popoverContainerRef.current.hidePopover();
+  };
+
+  const alertWrongSelection = () => {
+    setNotification(true);
+  };
+
+  const renderStopwatch = () => {
+    let hour = Math.floor(stopWatch / 3600) % 24;
+    let min = Math.floor(stopWatch / 60) % 60;
+    let sec = stopWatch % 60;
+
+    hour = hour < 10 ? `0${hour}` : hour;
+    min = min < 10 ? `0${min}` : min;
+    sec = sec < 10 ? `0${sec}` : sec;
+
+    return `${hour} : ${min} : ${sec}`;
   };
 
   return (
@@ -67,8 +117,36 @@ function Photo() {
           <p>{image.name}</p>
           <span className={styles.difficulty}>{image.difficulty}</span>
         </div>
+
+        <div>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 9.5V13.5L14.5 15M12 5C7.30558 5 3.5 8.80558 3.5 13.5C3.5 18.1944 7.30558 22 12 22C16.6944 22 20.5 18.1944 20.5 13.5C20.5 8.80558 16.6944 5 12 5ZM12 5V2M10 2H14M20.329 5.59204L18.829 4.09204L19.579 4.84204M3.67102 5.59204L5.17102 4.09204L4.42102 4.84204"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          {renderStopwatch()}
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "16px",
+        }}
+      >
+        <span>Character to seek: </span>
         <Characters characters={characters} />
-        <span>Timer</span>
       </div>
       <div className={styles.imgContainer}>
         <img
@@ -77,12 +155,37 @@ function Photo() {
           className={styles.img}
           onClick={displayCharactersDialog}
         />
+        {notification && (
+          <p
+            style={{
+              position: "absolute",
+              left: `${offsets.x + 8}px`,
+              top: `${offsets.y - 8}px`,
+            }}
+            className={notHere.notHere}
+            ref={notHereRef}
+          >
+            Not here!
+          </p>
+        )}
+        {markers.length > 0 &&
+          markers.map((marker, index) => (
+            <FoundMarker key={index} x={marker.x} y={marker.y} />
+          ))}
         <div
-          ref={imgContainerRef}
+          ref={popoverContainerRef}
           popover="auto"
           className={wrapperStyle.wrapper}
         >
-          <CharactersDialog characters={characters} />
+          <CharactersDialog
+            characters={characters}
+            width={dimensions.width}
+            height={dimensions.height}
+            photo_id={id}
+            mark={mark}
+            alert={alertWrongSelection}
+            parent={popoverContainerRef}
+          />
         </div>
       </div>
     </div>
