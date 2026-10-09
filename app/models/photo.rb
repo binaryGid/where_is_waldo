@@ -5,4 +5,5 @@ class Photo < ApplicationRecord
 
   has_many :characters
   has_many :answers, through: :characters
+  has_many :leaderboards
 end

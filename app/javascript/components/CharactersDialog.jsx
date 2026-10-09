@@ -9,6 +9,7 @@ function CharactersDialog({
   photo_id,
   mark,
   alert,
+  isComplete,
   parent,
 }) {
   const checkResult = (e, id) => {
@@ -25,17 +26,16 @@ function CharactersDialog({
     fetch(url, {
       method: "POST",
       headers: {
-        "X-CSRF_Token": token,
+        "X-CSRF-Token": token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-
         if (result.found) {
           mark(result.character_id);
+          isComplete();
         } else {
           alert();
         }

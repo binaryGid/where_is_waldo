@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_08_122725) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_09_013201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -35,6 +35,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_08_122725) do
     t.index ["photo_id"], name: "index_characters_on_photo_id"
   end
 
+  create_table "leaderboards", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "duration"
+    t.datetime "finish"
+    t.bigint "photo_id", null: false
+    t.string "record_id"
+    t.datetime "start"
+    t.datetime "updated_at", null: false
+    t.index ["photo_id"], name: "index_leaderboards_on_photo_id"
+  end
+
   create_table "photos", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "difficulty", null: false
@@ -45,4 +56,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_08_122725) do
 
   add_foreign_key "characters", "answers"
   add_foreign_key "characters", "photos"
+  add_foreign_key "leaderboards", "photos"
 end

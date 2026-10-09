@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get "leaderboards/index"
+      get "leaderboards/show"
+      patch "leaderboards/patch", to: "leaderboards#patch"
       post "answers/create", to: "answers#create"
       get "show/:id/characters/index", to: "characters#index"
       get "characters/show/:id", to: "character#show"

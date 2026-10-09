@@ -16,6 +16,7 @@ function Photo() {
   const [notification, setNotification] = useState(null);
   const [characters, setCharacters] = useState([]);
   const [dimensions, setDimensions] = useState({ width: null, height: null });
+  const [timeTaken, setTimeTaken] = useState("");
   const popoverContainerRef = useRef(null);
   const notHereRef = useRef(null);
   const { id } = useParams();
@@ -88,10 +89,55 @@ function Photo() {
 
   const mark = (character_id) => {
     setMarkers([...markers, { x: offsets.x, y: offsets.y }]);
-    characters.map((character) =>
-      character.id == character_id ? (character.found = true) : character,
-    );
+    const updatedChars = characters.map((character) => {
+      if (character.id == character_id) {
+        character.found = true;
+      }
+      return character;
+    });
+    setCharacters(updatedChars);
     popoverContainerRef.current.hidePopover();
+  };
+
+  const formatTime = (time) => {
+    let hour = Math.floor(time / 3600) % 24;
+    let min = Math.floor(time / 60) % 60;
+    let sec = time % 60;
+
+    hour = hour < 10 ? `0${hour}` : hour;
+    min = min < 10 ? `0${min}` : min;
+    sec = sec < 10 ? `0${sec}` : sec;
+
+    return `${hour} : ${min} : ${sec}`;
+  };
+
+  const completeEpisode = () => {
+    const complete = characters.every((character) => character.found);
+    console.log("complete:", complete);
+
+    if (complete) {
+      const url = "/api/v1/leaderboards/patch";
+      const token = document.querySelector("meta[name='csrf-token']").content;
+
+      const body = {
+        photo_id: id,
+        complete: complete,
+      };
+      fetch(url, {
+        method: "PATCH",
+        headers: {
+          "X-CSRF-Token": token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("ee:", result);
+          return formatTime(Number(result.duration));
+        })
+        .then((result) => setTimeTaken(result));
+    }
   };
 
   const alertWrongSelection = () => {
@@ -99,15 +145,7 @@ function Photo() {
   };
 
   const renderStopwatch = () => {
-    let hour = Math.floor(stopWatch / 3600) % 24;
-    let min = Math.floor(stopWatch / 60) % 60;
-    let sec = stopWatch % 60;
-
-    hour = hour < 10 ? `0${hour}` : hour;
-    min = min < 10 ? `0${min}` : min;
-    sec = sec < 10 ? `0${sec}` : sec;
-
-    return `${hour} : ${min} : ${sec}`;
+    return formatTime(stopWatch);
   };
 
   return (
@@ -117,7 +155,7 @@ function Photo() {
           <p>{image.name}</p>
           <span className={styles.difficulty}>{image.difficulty}</span>
         </div>
-
+        <p>{timeTaken ? timeTaken : "Duration"}</p>
         <div>
           <svg
             width="24"
@@ -145,7 +183,7 @@ function Photo() {
           padding: "16px",
         }}
       >
-        <span>Character to seek: </span>
+        <span>Characters to seek: </span>
         <Characters characters={characters} />
       </div>
       <div className={styles.imgContainer}>
@@ -184,6 +222,7 @@ function Photo() {
             photo_id={id}
             mark={mark}
             alert={alertWrongSelection}
+            isComplete={completeEpisode}
             parent={popoverContainerRef}
           />
         </div>

@@ -1,0 +1,18 @@
+require "test_helper"
+
+class Api::V1::LeaderboardsControllerTest < ActionDispatch::IntegrationTest
+  test "should get index" do
+    get api_v1_leaderboards_index_url
+    assert_response :success
+  end
+
+  test "should get show" do
+    get api_v1_leaderboards_show_url
+    assert_response :success
+  end
+
+  test "should get patch" do
+    get api_v1_leaderboards_patch_url
+    assert_response :success
+  end
+end
