@@ -7,6 +7,7 @@ import notHere from "../../assets/stylesheets/NotHere.module.css";
 import Characters from "./Characters";
 import CharactersDialog from "./CharactersDialog";
 import FoundMarker from "./FoundMarker";
+import Congartulate from "./Congratulate";
 
 function Photo() {
   const [stopWatch, setStopwatch] = useState(0);
@@ -19,12 +20,16 @@ function Photo() {
   const [timeTaken, setTimeTaken] = useState("");
   const popoverContainerRef = useRef(null);
   const notHereRef = useRef(null);
+  const congratsRef = useRef(null);
   const { id } = useParams();
 
   useEffect(() => {
     let interval = setInterval(() => {
       setStopwatch((prev) => prev + 1);
     }, 1000);
+    if (timeTaken) {
+      clearInterval(interval);
+    }
     return () => clearInterval(interval);
   });
 
@@ -136,7 +141,10 @@ function Photo() {
           console.log("ee:", result);
           return formatTime(Number(result.duration));
         })
-        .then((result) => setTimeTaken(result));
+        .then((result) => {
+          setTimeTaken(result);
+          congratsRef.current.showModal();
+        });
     }
   };
 
@@ -148,6 +156,10 @@ function Photo() {
     return formatTime(stopWatch);
   };
 
+  const closeDialog = () => {
+    congratsRef.current.close();
+  };
+
   return (
     <div>
       <div className={styles.titleBar}>
@@ -155,7 +167,6 @@ function Photo() {
           <p>{image.name}</p>
           <span className={styles.difficulty}>{image.difficulty}</span>
         </div>
-        <p>{timeTaken ? timeTaken : "Duration"}</p>
         <div>
           <svg
             width="24"
@@ -210,6 +221,7 @@ function Photo() {
           markers.map((marker, index) => (
             <FoundMarker key={index} x={marker.x} y={marker.y} />
           ))}
+
         <div
           ref={popoverContainerRef}
           popover="auto"
@@ -227,6 +239,20 @@ function Photo() {
           />
         </div>
       </div>
+      <dialog
+        ref={congratsRef}
+        style={{
+          margin: "auto",
+          border: "5px solid red",
+          width: "100%",
+          maxWidth: "480px",
+          border: "1px solid #2d514e",
+        }}
+      >
+        {timeTaken ? (
+          <Congartulate duration={timeTaken} close={closeDialog} />
+        ) : null}
+      </dialog>
     </div>
   );
 }
