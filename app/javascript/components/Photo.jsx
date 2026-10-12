@@ -40,7 +40,6 @@ function Photo() {
       .then((results) => {
         if (!ignore) {
           setImage(results);
-          console.log(results);
         }
       });
     return () => (ignore = true);
@@ -51,8 +50,6 @@ function Photo() {
     fetch(`/api/v1/show/${id}/characters/index`)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-
         if (!ignore) {
           setCharacters(result);
         }
@@ -62,31 +59,57 @@ function Photo() {
 
   const displayCharactersDialog = (e) => {
     const rect = e.target.getBoundingClientRect();
+
     const x = Number(e.nativeEvent.offsetX);
     const y = Number(e.nativeEvent.offsetY);
 
+    // const horizontalDiff = Number(rect.width) - x;
+    // const verticalDiff = Number(rect.height) - y;
+    // if (horizontalDiff > 330) {
+    //   popoverContainerRef.current.style.left = `${rect.left + x + 10}px`;
+    //   popoverContainerRef.current.style.right = null;
+    // } else {
+    //   popoverContainerRef.current.style.left = null;
+    //   popoverContainerRef.current.style.right = `calc(100vw - ${rect.left + x - 10}px)`;
+    // }
+    // if (verticalDiff > 297) {
+    //   popoverContainerRef.current.style.top = `${rect.top + y + 10}px`;
+    //   popoverContainerRef.current.style.bottom = null;
+    // } else {
+    //   popoverContainerRef.current.style.bottom = `calc(100dvh - ${rect.top + y - 10}px)`;
+    //   popoverContainerRef.current.style.top = null;
+    // }
+
     const horizontalDiff = Number(rect.width) - x;
     const verticalDiff = Number(rect.height) - y;
+
     if (horizontalDiff > 330) {
-      popoverContainerRef.current.style.left = `${rect.left + x + 10}px`;
+      popoverContainerRef.current.style.left = `calc(${x + rect.left}px / 100vw * 100% + 10px)`;
       popoverContainerRef.current.style.right = null;
     } else {
-      popoverContainerRef.current.style.left = null;
-      popoverContainerRef.current.style.right = `calc(100vw - ${rect.left + x - 10}px)`;
+      popoverContainerRef.current.style.left = `calc((${x + rect.left}px / 100vw * 100%) - 330px)`;
+      popoverContainerRef.current.style.right = null;
     }
-    if (verticalDiff > 297) {
-      popoverContainerRef.current.style.top = `${rect.top + y + 10}px`;
+    if (verticalDiff > 295) {
+      // popoverContainerRef.current.style.top = `calc(${y + rect.top}px / 100dvh * 100% + 10px)`;
+
+      popoverContainerRef.current.style.top = `calc(${y + 316}px / 100dvh * 100%)`;
       popoverContainerRef.current.style.bottom = null;
     } else {
-      popoverContainerRef.current.style.bottom = `calc(100dvh - ${rect.top + y - 10}px)`;
-      popoverContainerRef.current.style.top = null;
+      popoverContainerRef.current.style.top = `calc(${y + 316 - 295}px / 100dvh * 100%)`;
+      popoverContainerRef.current.style.bottom = null;
     }
 
     const width = (x / Number(rect.width)).toFixed(4) * 100;
     const height = (y / Number(rect.height)).toFixed(4) * 100;
     setDimensions((prev) => ({ ...prev, width, height }));
 
-    setOffsets({ ...offsets, x: x, y: y });
+    // setOffsets({ ...offsets, x: x, y: y });
+    setOffsets({
+      ...offsets,
+      x: (x * 100) / Number(rect.width),
+      y: (y * 100) / Number(rect.height),
+    });
     setNotification(null);
 
     popoverContainerRef.current.showPopover();
@@ -118,7 +141,6 @@ function Photo() {
 
   const completeEpisode = () => {
     const complete = characters.every((character) => character.found);
-    console.log("complete:", complete);
 
     if (complete) {
       const url = "/api/v1/leaderboards/patch";
@@ -138,7 +160,6 @@ function Photo() {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log("ee:", result);
           return formatTime(Number(result.duration));
         })
         .then((result) => {
@@ -178,9 +199,9 @@ function Photo() {
             <path
               d="M12 9.5V13.5L14.5 15M12 5C7.30558 5 3.5 8.80558 3.5 13.5C3.5 18.1944 7.30558 22 12 22C16.6944 22 20.5 18.1944 20.5 13.5C20.5 8.80558 16.6944 5 12 5ZM12 5V2M10 2H14M20.329 5.59204L18.829 4.09204L19.579 4.84204M3.67102 5.59204L5.17102 4.09204L4.42102 4.84204"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
           {renderStopwatch()}
@@ -208,8 +229,10 @@ function Photo() {
           <p
             style={{
               position: "absolute",
-              left: `${offsets.x + 8}px`,
-              top: `${offsets.y - 8}px`,
+              // left: `${offsets.x + 8}px`,
+              // top: `${offsets.y - 8}px`,
+              left: `${offsets.x}%`,
+              top: `${offsets.y}%`,
             }}
             className={notHere.notHere}
             ref={notHereRef}
@@ -250,7 +273,7 @@ function Photo() {
         }}
       >
         {timeTaken ? (
-          <Congartulate duration={timeTaken} close={closeDialog} />
+          <Congartulate duration={timeTaken} close={closeDialog} id={id} />
         ) : null}
       </dialog>
     </div>

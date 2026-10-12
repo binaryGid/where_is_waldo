@@ -1,4 +1,12 @@
 .header {
   background-color: #fff;
   padding: 18px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header a {
+  color: inherit;
+  font-size: 18px;
 }

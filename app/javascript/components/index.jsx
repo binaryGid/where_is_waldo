@@ -6,6 +6,7 @@ import Home from "./Home";
 import Photos from "./Photos";
 import "../../assets/stylesheets/application.css";
 import Photo from "./Photo";
+import Leaderboard from "./Leaderboard";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "photo/:id",
         element: <Photo />,
+      },
+      {
+        path: "leaderboard",
+        element: <Leaderboard />,
       },
     ],
   },

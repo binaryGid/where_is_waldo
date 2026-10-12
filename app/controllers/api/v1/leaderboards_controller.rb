@@ -1,15 +1,16 @@
 class Api::V1::LeaderboardsController < ApplicationController
-  before_action :find_record
+  before_action :find_record, only: [ :patch ]
   def index
+    leaderboard = Leaderboard.all.where.not(duration: nil).order(duration: :desc).limit(20)
+    render json: leaderboard
   end
 
   def show
   end
 
   def patch
-    puts "hiiiiiiiiiiiiiiii"
     find_record.update!(finish: Time.now) if params[:complete]
-    puts find_record.inspect
+    find_record.update!(name: params[:name]) if params[:name]
     render json: { duration: find_record.duration }
   end
 

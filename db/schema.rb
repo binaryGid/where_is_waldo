@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_09_013201) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_09_234649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,6 +39,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_09_013201) do
     t.datetime "created_at", null: false
     t.integer "duration"
     t.datetime "finish"
+    t.string "name"
     t.bigint "photo_id", null: false
     t.string "record_id"
     t.datetime "start"

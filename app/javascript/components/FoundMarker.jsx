@@ -5,9 +5,10 @@ function FoundMarker({ x, y }) {
     <div
       style={{
         position: "absolute",
-        top: `${y - 4}px`,
-        left: `${x - 6}px`,
+        top: `${y}%`,
+        left: `${x}%`,
         background: "black",
+        transform: "translate(-50%, -50%)",
       }}
     >
       <svg
