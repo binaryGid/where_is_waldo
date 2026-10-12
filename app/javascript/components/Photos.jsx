@@ -15,6 +15,9 @@ function Photos() {
           setImages((prev) => [...prev, ...data]);
           console.log(data);
         }
+      })
+      .catch((error) => {
+        throw new Error(error);
       });
 
     return () => (ignore = true);
