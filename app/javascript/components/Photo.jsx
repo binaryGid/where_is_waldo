@@ -266,7 +266,6 @@ function Photo() {
         ref={congratsRef}
         style={{
           margin: "auto",
-          border: "5px solid red",
           width: "100%",
           maxWidth: "480px",
           border: "1px solid #2d514e",
