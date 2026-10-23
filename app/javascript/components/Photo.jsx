@@ -27,9 +27,10 @@ function Photo() {
     let ignore = false;
     fetch(`/api/v1/show/${id}`)
       .then((response) => response.json())
-      .then((results) => {
+      .then((result) => {
         if (!ignore) {
-          setImage(results);
+          setImage(result);
+          console.log(result);
         }
       });
     return () => (ignore = true);
