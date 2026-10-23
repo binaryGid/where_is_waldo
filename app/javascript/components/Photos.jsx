@@ -30,9 +30,8 @@ function Photos() {
     <section>
       <div className={styles.container}>
         {images.map((image) => (
-          <Link to={`/photo/${image.id}`}>
+          <Link to={`/photo/${image.id}`} key={image.image}>
             <Card
-              key={image.image}
               src={image.image}
               name={image.name}
               difficulty={image.difficulty}
