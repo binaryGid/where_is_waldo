@@ -24,16 +24,6 @@ function Photo() {
   const { id } = useParams();
 
   useEffect(() => {
-    let interval = setInterval(() => {
-      setStopwatch((prev) => prev + 1);
-    }, 1000);
-    if (timeTaken) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  });
-
-  useEffect(() => {
     let ignore = false;
     fetch(`/api/v1/show/${id}`)
       .then((response) => response.json())
@@ -63,23 +53,6 @@ function Photo() {
     const x = Number(e.nativeEvent.offsetX);
     const y = Number(e.nativeEvent.offsetY);
 
-    // const horizontalDiff = Number(rect.width) - x;
-    // const verticalDiff = Number(rect.height) - y;
-    // if (horizontalDiff > 330) {
-    //   popoverContainerRef.current.style.left = `${rect.left + x + 10}px`;
-    //   popoverContainerRef.current.style.right = null;
-    // } else {
-    //   popoverContainerRef.current.style.left = null;
-    //   popoverContainerRef.current.style.right = `calc(100vw - ${rect.left + x - 10}px)`;
-    // }
-    // if (verticalDiff > 297) {
-    //   popoverContainerRef.current.style.top = `${rect.top + y + 10}px`;
-    //   popoverContainerRef.current.style.bottom = null;
-    // } else {
-    //   popoverContainerRef.current.style.bottom = `calc(100dvh - ${rect.top + y - 10}px)`;
-    //   popoverContainerRef.current.style.top = null;
-    // }
-
     const horizontalDiff = Number(rect.width) - x;
     const verticalDiff = Number(rect.height) - y;
 
@@ -91,8 +64,6 @@ function Photo() {
       popoverContainerRef.current.style.right = null;
     }
     if (verticalDiff > 295) {
-      // popoverContainerRef.current.style.top = `calc(${y + rect.top}px / 100dvh * 100% + 10px)`;
-
       popoverContainerRef.current.style.top = `calc(${y + 316}px / 100dvh * 100%)`;
       popoverContainerRef.current.style.bottom = null;
     } else {
@@ -104,7 +75,6 @@ function Photo() {
     const height = (y / Number(rect.height)).toFixed(4) * 100;
     setDimensions((prev) => ({ ...prev, width, height }));
 
-    // setOffsets({ ...offsets, x: x, y: y });
     setOffsets({
       ...offsets,
       x: (x * 100) / Number(rect.width),
@@ -169,6 +139,21 @@ function Photo() {
     }
   };
 
+  const startStopWatch = () => {
+    let interval = setInterval(() => {
+      setStopwatch((prev) => prev + 1);
+    }, 1000);
+    if (timeTaken) {
+      clearInterval(interval);
+    }
+  };
+
+  const startGame = (e) => {
+    e.target.style.display = "none";
+    startStopWatch();
+    e.target.parentNode.firstChild.style.filter = "blur(0)";
+  };
+
   const alertWrongSelection = () => {
     setNotification(true);
   };
@@ -229,8 +214,6 @@ function Photo() {
           <p
             style={{
               position: "absolute",
-              // left: `${offsets.x + 8}px`,
-              // top: `${offsets.y - 8}px`,
               left: `${offsets.x}%`,
               top: `${offsets.y}%`,
             }}
@@ -244,7 +227,13 @@ function Photo() {
           markers.map((marker, index) => (
             <FoundMarker key={index} x={marker.x} y={marker.y} />
           ))}
-
+        <button
+          type="button"
+          className={styles.startGameButton}
+          onClick={startGame}
+        >
+          Start Game
+        </button>
         <div
           ref={popoverContainerRef}
           popover="auto"

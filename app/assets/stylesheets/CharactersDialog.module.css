@@ -5,7 +5,25 @@
   position: absolute;
   transform: translate((-50%, -50%));
   inset: auto;
-  & h2 {
+  & .titleWrapper {
     margin-bottom: 8px;
+  }
+}
+
+.titleWrapper,
+.titleWrapper > button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleWrapper > button {
+  background-color: inherit;
+  border: none;
+  &:hover {
+    background-color: #f44336;
+    & path {
+      fill: #fff;
+    }
   }
 }

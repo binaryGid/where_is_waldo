@@ -3,8 +3,9 @@
   flex-direction: column;
   position: relative;
   gap: 8px;
-  border: 1px solid black;
   padding: 6px;
+  background-color: #fff;
+  border-radius: 30px;
   &:hover {
     cursor: pointer;
   }
@@ -13,18 +14,51 @@
 .poster {
   width: 100%;
   aspect-ratio: 16 / 9;
+  border-radius: 24px;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 8px;
+  & * {
+    font-size: clamp(20px, 1.6rem, 1vw);
+  }
 }
 
 .name {
-  text-align: center;
-  font-size: clamp(16px, 1.6rem, 2vw);
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.playButton {
+  background-color: #161616;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.playButton > span {
+  color: #fff;
 }
 
 .difficulty {
   position: absolute;
+  width: 120px;
+  text-align: center;
   right: 5%;
-  top: 12px;
-  background-color: #fff;
+  top: 18px;
+  background-color: #000;
   padding: 8px 12px;
   border-radius: 24px;
   font-weight: 600;
