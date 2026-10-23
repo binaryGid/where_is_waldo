@@ -42,7 +42,11 @@ function Photo() {
       .then((result) => {
         if (!ignore) {
           setCharacters(result);
+          console.log(result);
         }
+      })
+      .catch((error) => {
+        throw new Error(error);
       });
     return () => (ignore = true);
   }, []);
