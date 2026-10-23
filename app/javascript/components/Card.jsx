@@ -22,10 +22,10 @@ function Card({ src, name, difficulty }) {
             viewBox="0 0 24 24"
             fill="white"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-play"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="feather feather-play"
             style={{ color: "#000" }}
           >
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
