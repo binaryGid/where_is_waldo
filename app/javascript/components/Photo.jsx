@@ -41,6 +41,9 @@ function Photo() {
         if (!ignore) {
           setImage(results);
         }
+      })
+      .catch((error) => {
+        throw new Error(error);
       });
     return () => (ignore = true);
   }, []);
@@ -53,6 +56,9 @@ function Photo() {
         if (!ignore) {
           setCharacters(result);
         }
+      })
+      .catch((error) => {
+        throw new Error(error);
       });
     return () => (ignore = true);
   }, []);
