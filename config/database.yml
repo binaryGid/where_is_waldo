@@ -19,7 +19,6 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-
 development:
   <<: *default
   database: where_is_waldo_development
@@ -87,8 +86,9 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: where_is_waldo_production
-    username: where_is_waldo
+    database: waldo_db_kqrm
+    username: waldo_db_kqrm_user
+    url: <%= ENV["WHERE_IS_WALDO_DATABASE_URL"] %>
     password: <%= ENV["WHERE_IS_WALDO_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
