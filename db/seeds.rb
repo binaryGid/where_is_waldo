@@ -249,7 +249,7 @@ Photo.find_or_create_by!({ difficulty: 'medium', image: "/images/medieval_city.j
     ]
   }
 }.each_pair do |key, value|
-  photo = Photo.find(key)
+  photo = Photo.find_by(name: key)
   numOfCharacters = value[:names].length
   numOfCharacters.times do |i|
     photo.characters.create!({ name: value[:names][i], location: value[:locations][i], answer: Answer.find_or_create_by!(value[:answers][i]) })
